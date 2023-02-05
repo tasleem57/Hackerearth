@@ -1,0 +1,32 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+ 
+#define MAX 1001
+ 
+int fval[MAX][MAX];
+ 
+int f(int x, int y) {
+	if (fval[x][y] != -1)
+		return fval[x][y];
+	if (x == 0) {
+		fval[x][y] = (y+1) % 1000;
+		return fval[x][y];
+	} else {
+		if (y == 0) {
+			fval[x][y] = f(x-1,1);
+			return fval[x][y];
+		} else {
+			fval[x][y] = f(x-1,f(x,y-1));
+			return fval[x][y];
+		}
+	}
+}
+ 
+int main() {
+	memset(fval,-1,sizeof(fval));
+	int x, y;
+	cin >> x >> y;
+	printf("%03d\n",f(x,y));
+	return 0;
+}
